@@ -6,12 +6,14 @@ export const cl100k_base = 'cl100k_base'
 export const p50k_base = 'p50k_base'
 export const p50k_edit = 'p50k_edit'
 export const r50k_base = 'r50k_base'
+export const claude = 'claude'
 
 export const encodingNames = [
   cl100k_base,
   p50k_base,
   r50k_base,
   p50k_edit,
+  claude,
 ] as const
 
 export const modelToEncodingMap = {
@@ -33,6 +35,7 @@ export const modelToEncodingMap = {
   curie: r50k_base,
   babbage: r50k_base,
   ada: r50k_base,
+  claude: claude,
   // code
   'code-davinci-002': p50k_base,
   'code-davinci-001': p50k_base,
@@ -88,6 +91,7 @@ const internalChatModelParams = {
     messageSeparator: '',
     roleSeparator: ImSep,
   },
+  
 }
 
 export const chatModelParams: Partial<Record<ModelName, ChatParameters>> =

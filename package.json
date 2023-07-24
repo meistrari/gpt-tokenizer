@@ -1,7 +1,7 @@
 {
-  "name": "gpt-tokenizer",
-  "version": "0.0.0",
-  "description": "A pure JavaScript implementation of a BPE tokenizer (Encoder/Decoder) for GPT-2 / GPT-3 / GPT-4 and other OpenAI models",
+  "name": "@meistrari/gpt-tokenizer",
+  "version": "0.3.0",
+  "description": "A pure JavaScript implementation of a BPE tokenizer (Encoder/Decoder) for GPT-2 / GPT-3 / GPT-4 / Claude Instant / Claude 2",
   "keywords": [
     "BPE",
     "encoder",
@@ -19,21 +19,26 @@
     "Machine Learning",
     "ml"
   ],
-  "homepage": "https://github.com/niieani/gpt-tokenizer#readme",
+  "homepage": "https://github.com/meistrari/gpt-tokenizer#readme",
   "bugs": {
-    "url": "https://github.com/niieani/gpt-tokenizer/issues"
+    "url": "https://github.com/meistrari/gpt-tokenizer/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/niieani/gpt-tokenizer.git"
+    "url": "https://github.com/meistrari/gpt-tokenizer.git"
   },
   "license": "MIT",
-  "author": "Bazyli Brzoska <npm@invent.life> (https://github.com/niieani)",
+  "author": "Henrique Cunha",
   "contributors": [
     {
       "name": "Bazyli Brzoska",
       "email": "npm@invent.life",
       "url": "https://github.com/niieani"
+    },
+    {
+      "name": "Henrique Cunha",
+      "email": "henrycunh@gmail.com",
+      "url": "https://github.com/henrycunh"
     }
   ],
   "exports": {
@@ -72,26 +77,26 @@
     "dist"
   ],
   "scripts": {
-    "codegen:models": "yarn tsx src/codegen/generateByModel.ts",
-    "codegen:encodings": "yarn tsx src/codegen/generateJsEncodings.ts",
-    "build": "yarn build:cjs && yarn build:esm && yarn build:umd",
-    "build:cjs": "yarn rrun tsc --outDir cjs --module commonjs --target es2022 --project tsconfig-cjs.json",
-    "build:esm": "yarn rrun tsc --outDir esm --module esnext --target es2022 && echo '{\"name\": \"gpt-tokenizer\", \"type\": \"module\"}' > ./esm/package.json",
-    "build:umd": "yarn build:umd:cl100k_base && yarn build:umd:p50k_base && yarn build:umd:p50k_edit && yarn build:umd:r50k_base",
+    "codegen:models": "tsx src/codegen/generateByModel.ts",
+    "codegen:encodings": "tsx src/codegen/generateJsEncodings.ts",
+    "build": "bun run build:cjs && bun run build:esm && bun run build:umd",
+    "build:cjs": "bun run tsc --outDir cjs --module commonjs --target es2022 --project tsconfig-cjs.json",
+    "build:esm": "bun run tsc --outDir esm --module esnext --target es2022 && echo '{\"name\": \"gpt-tokenizer\", \"type\": \"module\"}' > ./esm/package.json",
+    "build:umd": "bun run build:umd:cl100k_base && bun run build:umd:p50k_base && bun run build:umd:p50k_edit && bun run build:umd:r50k_base",
     "build:umd:cl100k_base": "beemo webpack --entry='./src/main.ts' --env 'outDir=dist' --env 'moduleTarget=umd' --env 'engineTarget=web' --env 'codeTarget=es2022' --env 'name=GPTTokenizer_cl100k_base' --env 'filename=cl100k_base.js'",
     "build:umd:p50k_base": "beemo webpack --entry='./src/encoding/p50k_base.ts' --env 'outDir=dist' --env 'moduleTarget=umd' --env 'engineTarget=web' --env 'codeTarget=es2022' --env 'name=GPTTokenizer_p50k_base' --env 'filename=p50k_base.js'",
     "build:umd:p50k_edit": "beemo webpack --entry='./src/encoding/p50k_edit.ts' --env 'outDir=dist' --env 'moduleTarget=umd' --env 'engineTarget=web' --env 'codeTarget=es2022' --env 'name=GPTTokenizer_p50k_edit' --env 'filename=p50k_edit.js'",
     "build:umd:r50k_base": "beemo webpack --entry='./src/encoding/r50k_base.ts' --env 'outDir=dist' --env 'moduleTarget=umd' --env 'engineTarget=web' --env 'codeTarget=es2022' --env 'name=GPTTokenizer_r50k_base' --env 'filename=r50k_base.js'",
     "clean": "git clean -dfX --exclude=node_modules src && beemo typescript:sync-project-refs",
-    "format": "yarn rrun prettier --write \"./{src,tests,.config}/**/!(*.d).{.js,jsx,ts,tsx,json,md}\"",
+    "format": "bun run prettier --write \"./{src,tests,.config}/**/!(*.d).{.js,jsx,ts,tsx,json,md}\"",
     "postinstallDev": "yarn prepare",
-    "prepare": "rrun husky install .config/husky && beemo create-config",
+    "prepare": "bunx husky install .config/husky && beemo create-config",
     "release": "beemo run-script release",
-    "test": "yarn test:format && yarn test:types && yarn test:lint && yarn test:code",
-    "test:code": "rrun jest",
-    "test:format": "yarn rrun prettier --check \"./{src,tests,.config}/**/!(*.d).{.js,jsx,ts,tsx,json,md}\"",
-    "test:lint": "rrun eslint 'src/*.{js,jsx,ts,tsx}'",
-    "test:types": "yarn rrun tsc --noEmit"
+    "test": "bun run test:format && bun run test:types && bun run test:lint && bun run test:code",
+    "test:code": "bunx jest",
+    "test:format": "bun run prettier --check \"./{src,tests,.config}/**/!(*.d).{.js,jsx,ts,tsx,json,md}\"",
+    "test:lint": "bunx eslint 'src/*.{js,jsx,ts,tsx}'",
+    "test:types": "bun run tsc --noEmit"
   },
   "release": {
     "branches": [

@@ -44,7 +44,7 @@ const results = {
   p50k_base: sharedResults,
   p50k_edit: sharedResults,
   r50k_base: sharedResults,
-} satisfies Record<EncodingName, unknown>
+} as Record<EncodingName, unknown>
 
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
 const testPlans = loadTestPlans()
@@ -60,7 +60,7 @@ describe.each(encodingNames)('%s', (encodingName: EncodingName) => {
     isWithinTokenLimit,
   } = encoding
 
-  const result = results[encodingName]
+  const result = (results as any)[encodingName]
 
   describe('basic functionality', () => {
     it('empty string', () => {
@@ -111,7 +111,7 @@ describe.each(encodingNames)('%s', (encodingName: EncodingName) => {
     it('decode token-by-token via generator', () => {
       const str = 'hello 👋 world 🌍'
       const generator = decodeGenerator(result[str])
-      result.decodedHelloWorldTokens.forEach((token) => {
+      result.decodedHelloWorldTokens.forEach((token: any) => {
         expect(generator.next().value).toBe(token)
       })
     })
@@ -243,6 +243,7 @@ function loadTestPlans() {
     p50k_base: [],
     p50k_edit: [],
     r50k_base: [],
+    claude: [],
   }
   testPlanData.split('\n\n').forEach((testPlan) => {
     const [encodingNameLine, sampleLine, encodedLine] = testPlan.split('\n')

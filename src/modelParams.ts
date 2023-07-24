@@ -86,6 +86,22 @@ function Cl100KBase(mergeableBytePairRanks: EncoderMap): EncodingParams {
   }
 }
 
+
+function Claude(mergeableBytePairRanks: EncoderMap): EncodingParams {
+  return {
+    tokenSplitRegex,
+    mergeableBytePairRanks,
+    specialTokenMapping: new Map<string, number>([
+      ["<EOT>", 0],
+      ["<META>", 1],
+      ["<META_START>", 2],
+      ["<META_END>", 3],
+      ["<SOS>", 4],
+    ]),
+  }
+}
+
+
 export type GetMergeableRanksFn = (encodingName: EncodingName) => EncoderMap
 export type GetMergeableRanksAsyncFn = (
   encodingName: EncodingName,
@@ -108,6 +124,9 @@ export function getEncodingParams(
 
     case 'cl100k_base':
       return Cl100KBase(mergeableBytePairRanks)
+
+    case 'claude':
+      return  Claude(mergeableBytePairRanks)
 
     default:
       throw new Error(`Unknown encoding name: ${encodingName}`)

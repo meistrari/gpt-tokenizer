@@ -53,3 +53,5 @@ node_modules/
 
 tsconfig.json
 jest.config.js
+
+playground.ts
