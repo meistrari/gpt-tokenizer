@@ -1,6 +1,6 @@
 {
   "name": "@meistrari/gpt-tokenizer",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A pure JavaScript implementation of a BPE tokenizer (Encoder/Decoder) for GPT-2 / GPT-3 / GPT-4 / Claude Instant / Claude 2",
   "keywords": [
     "BPE",
